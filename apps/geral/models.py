@@ -18,3 +18,17 @@ class Oficina(models.Model):
         verbose_name = 'Oficina'
         verbose_name_plural = 'Oficinas'
         ordering = ['nome']
+        
+
+class Mecanico(models.Model):
+    oficna = models.ForeignKey(Oficina, verbose_name = 'Oficina', on_delete=models.CASCADE )
+    nome = models.CharField(verbose_name='Nome', max_length = 100)
+    codigo = models.PositiveSmallIntegerField(verbose_name='Código')
+    
+    def __str__(self) -> str:
+        return self.nome
+    
+    class Meta:
+        verbose_name = 'Mecânico'
+        verbose_name_plural = 'Mecânicos'
+        ordering = ['nome']
