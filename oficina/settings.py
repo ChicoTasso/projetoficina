@@ -34,6 +34,8 @@ DJANGO_APPS = [
 ]
 
 UTIL_APPS = [
+
+    'widget_tweaks'
     
 ]
 
