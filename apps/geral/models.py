@@ -21,7 +21,7 @@ class Oficina(models.Model):
         
 
 class Mecanico(models.Model):
-    oficna = models.ForeignKey(Oficina, verbose_name = 'Oficina', on_delete=models.CASCADE )
+    oficina = models.ForeignKey(Oficina, verbose_name = 'Oficina', on_delete=models.CASCADE )
     nome = models.CharField(verbose_name='Nome', max_length = 100)
     codigo = models.PositiveSmallIntegerField(verbose_name='Código')
     
