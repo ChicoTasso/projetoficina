@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from decouple import config, Csv
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +37,8 @@ DJANGO_APPS = [
 
 UTIL_APPS = [
 
-    'widget_tweaks'
+    'widget_tweaks',
+    'bootstrap5',
     
 ]
 
@@ -146,3 +148,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert alert-success',
+    messages.INFO: 'alert alert-info',
+    messages.WARNING: 'alert alert-warning',
+    messages.ERROR: 'alert alert-danger',
+}

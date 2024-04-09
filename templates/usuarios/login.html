@@ -1,4 +1,4 @@
-{% load static %}
+{% load static bootstrap5  %}
 {% load widget_tweaks %}
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
@@ -179,9 +179,12 @@
 
 
   <main class="form-signin w-100 m-auto">
+
     <form method="post">
       {% csrf_token %}
       <h1 class="h3 mb-3 fw-normal">Login</h1>
+      
+    {% include 'utils/messages.html' %}
 
       <div class="mb-3">
         <label for="{{ form.usuario.id_for_label }}">{{ form.usuario.label }}</label>
@@ -191,11 +194,14 @@
         <label for="{{ form.senha.id_for_label }}">{{ form.senha.label }}</label>
         {% render_field form.senha class='form-control rounded' %}
       </div>
-
-
+      
+      
       <button class="btn btn-primary w-100 py-2" type="submit">Entrar</button>
     </form>
-    <script defer src="{% static 'js/color-modes.js' %}"></script>
+
+  </main> 
+
+  <script defer src="{% static 'js/color-modes.js' %}"></script>
     <script defer src="{% static 'js/jquery.min.js' %}"></script>
     <script defer src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
