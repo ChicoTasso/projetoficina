@@ -6,5 +6,4 @@ class ServicoForm(forms.ModelForm):
 
     class Meta:
         model = Servico
-        # exclude = ['oficina']
-        fields = '__all__'
+        exclude = ['oficina']

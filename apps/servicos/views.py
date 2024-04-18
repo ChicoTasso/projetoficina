@@ -18,15 +18,16 @@ def novoServico(request):
     context = {}
     if request.method == 'POST':
         form = ServicoForm(request.POST)
-        oficina = get_object_or_404(Oficina, usuario=request.user)
+        usuario = request.user
+        oficina = get_object_or_404(Oficina, usuario=usuario)
         if form.is_valid():
             sf = form.save(commit=False)
             sf.oficina = oficina
             sf.save()
-            messages.success(request, 'Serviço adicionado com sucesso')
-            return redirect('servicos:listaServicos')    
+            messages.success(request, "Serviço adicionado com sucesso!")
+            return redirect('servicos:listaServico')
     form = ServicoForm()
-    context['form'] = form
+    context['form'] = form   
     return render(request, template_name, context)
 
 
@@ -35,7 +36,7 @@ def novoServico(request):
 def listaServico(request):
     template_name = 'servicos/listaServico.html'
 
-    oficina = get_object_or_404(usuario = request.user)
+    oficina = Oficina.objects.filter(usuario=request.user).first()
     servicos = Servico.objects.filter(oficina = oficina)
     context = {
         'servicos':servicos,
@@ -56,9 +57,10 @@ def editarServico(request, pk):
     servico = get_object_or_404(Servico, pk=pk)
     if request.method == 'POST':
         form = ServicoForm(data=request.POST, instance=servico)
-        form.save()
-        messages.success(request, 'Serviço editada com sucesso.')
-        return redirect('servicos:listaServico')
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Serviço editado com sucesso.')
+            return redirect('servicos:listaServico')
     form = ServicoForm(instance=servico)
     context['form'] = form
     return render(request, template_name, context)
