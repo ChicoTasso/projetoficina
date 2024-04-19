@@ -78,20 +78,17 @@ def editarOficina(request, pk):
 #          return render(request, 'atualizar.html', {'form': form})
 
 @login_required
-def novaMecanico(request):
-    template_name = 'geral/novaMecanico.html'
+def novoMecanico(request):
+    template_name = 'geral/novoMecanico.html'
     context = {}
     if request.method == 'POST':
         form = MecanicoForm(request.POST)
+        oficina = get_object_or_404(Oficina, usuario = request.user)
         if form.is_valid():
-            of = form.save(commit=False)
-            of.usuario = request.user
-            of.save()            
+            form = form.save(commit=False)
+            form.oficina = oficina
+            form.save()            
             messages.success(request, 'Mecanico cadastrada com sucesso.')
-            return redirect('geral:listaMecanico')
-        else:
-            messagem_erro = list(form.errors.values()[0][0])
-            messages.error(request, f'{messagem_erro}')
             return redirect('geral:listaMecanico')
     form = MecanicoForm()
     context['form'] = form
@@ -117,14 +114,15 @@ def deletarMecanico(request, pk):
 
 @login_required
 def editarMecanico(request, pk):
-    template_name = 'geral/novaMecanico.html'
+    template_name = 'geral/novoMecanico.html'
     context = {}
     mecanico = get_object_or_404(Mecanico, pk=pk)
     if request.method == 'POST':
         form = MecanicoForm(data=request.POST, instance=mecanico)
-        form.save()
-        messages.success(request, 'Mecânico editada com sucesso.')
-        return redirect('geral:listaMecanico')
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Mecânico editada com sucesso.')
+            return redirect('geral:listaMecanico')
     form = MecanicoForm(instance=mecanico)
     context['form'] = form
     return render(request, template_name, context)

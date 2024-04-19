@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block titulo %}
-Oficina | {{ block.super }}
+Mecânico | {{ block.super }}
 {% endblock titulo %}
 
 {% block main %}
@@ -13,11 +13,11 @@ Oficina | {{ block.super }}
     {% csrf_token %}
     <div class="mb-3">
         <label for="{{ form.nome.id_for_label }}" class="form-label">{{form.nome.label}}</label>        
-        {% render_field form.nome class="form-control" placeholder='Digite o nome da oficina...' %}
+        {% render_field form.nome class="form-control" placeholder='Digite o nome do mecânico...' %}
     </div>
     <div class="mb-3">
         <label for="{{ form.codigo.id_for_label }}" class="form-label">{{form.codigo.label}}</label>        
-        {% render_field form.codigo class="form-control" placeholder='Digite o Código da oficina...' %}
+        {% render_field form.codigo class="form-control" placeholder='Digite o Código do mecânico...' %}
     </div>
     
     <button type="submit" class="btn btn-primary"><i class="fa-regular fa-paper-plane"></i><span> </span>{% if form.instance.pk %} Salvar {% else %} Criar {% endif %}</button>
