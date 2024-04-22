@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import ServicoForm
-from .models import Servico, Oficina
+from .forms import ServicoForm, OrdemServicoForm
+from .models import Servico, Oficina, OrdemServico
 
     
 
@@ -64,3 +64,49 @@ def editarServico(request, pk):
     form = ServicoForm(instance=servico)
     context['form'] = form
     return render(request, template_name, context)
+
+@login_required
+def novaOrdemServico(request):
+    template_name = 'servicos/novaOrdemServico.html'
+    context = {}
+    oficina = get_object_or_404(Oficina, usuario = request.user)
+    if request.method == 'POST':
+        form = OrdemServicoForm(request.POST)
+        if form.is_valid():
+            osf = form.save(commit = False)
+            osf.oficina = oficina
+            osf.save()
+            messages.success(request, 'Ordem de Serviço criada com Sucesso')
+            return redirect('servicos:listaOrdemServico')
+    form = OrdemServicoForm
+    context['form'] = form
+    return render (request, template_name, context)
+
+@login_required
+def listaOrdemServico(request):
+    template_name = 'servicos/listaOrdemServico.html'
+    oficina = get_object_or_404(Oficina, usuario = request.user)
+    ordensServicos = OrdemServico.objects.filter(oficina=oficina)
+    context = {
+        'ordensServicos':ordensServicos
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def editarOrdemServico(request, pk):
+    template_name = 'servicos/novaOrdemServico.html'
+    context = {}
+    ordemServico = get_object_or_404(OrdemServico, pk=pk)
+    if request.method == 'POST':
+        form = OrdemServicoForm(data=request.POST, instance=ordemServico)
+        if form.is_valid():
+            form.save()
+            messages.success( request,'Ordem de Serviço editada com sucesso')
+            return redirect('servicos:listaOrdemServico')
+    form = OrdemServicoForm(instance=ordemServico)
+    context['form'] = form
+    return render (request, template_name, context)
+        
+
+
