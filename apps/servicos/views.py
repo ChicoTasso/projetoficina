@@ -76,6 +76,7 @@ def novaOrdemServico(request):
             osf = form.save(commit = False)
             osf.oficina = oficina
             osf.save()
+            form.save_m2m()
             messages.success(request, 'Ordem de Serviço criada com Sucesso')
             return redirect('servicos:listaOrdemServico')
     form = OrdemServicoForm

@@ -37,7 +37,7 @@ Oficinas | {{ block.super }}
             <td>{{ ordensServico.previsao}}</td>
             <td>{{ ordensServico.data_entrada}}</td>
             <td>{{ ordensServico.codigo}}</td>
-            <td>{{ ordensServico.servico.nome }}</td>
+            <td>{{ ordensServico.servico.all |join:', ' }}</td>
 
             <td>
                 <a class="btn btn-outline-info btn-sm" href="{% url 'servicos:editarOrdemServico' ordensServico.id %}"><i class="fa-solid fa-arrow-rotate-right"></i></a>
