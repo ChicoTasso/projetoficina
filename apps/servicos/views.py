@@ -111,3 +111,11 @@ def editarOrdemServico(request, pk):
         
 
 
+
+@login_required
+def novoRelatorio(request):
+    mecanico = request.GET.get('mecanico')
+    data_inicial = request.GET.get('data_inicial')
+    data_final = request.GET.get('data_final')
+    ordens_servicos = OrdemServico.objects.filter(data_entrada=data_inicial, data_entrega=data_final, mecanico=mecanico)
+
